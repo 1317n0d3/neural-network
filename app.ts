@@ -1,13 +1,16 @@
-class Neuron {
+class Perceptron {
   alpha: number = 1
   inputs: Array<number>
   weights: Array<number>
   outputs: Array<number>
+  neurons: Array<number>
+  layersCount: number
 
-  constructor(inputs: Array<number>, weights: Array<number>, outputs: Array<number>) {
+  constructor(inputs: Array<number>, weights: Array<number>, outputs: Array<number>, layersCount: number) {
     this.inputs = inputs
     this.weights = weights
     this.outputs = outputs
+    this.layersCount = layersCount
   }
 
   getWeightSum(inputs: Array<number>): number {
@@ -19,6 +22,6 @@ class Neuron {
   }
 }
 
-const neuron: Neuron = new Neuron([1, 2, 3, 4], [1, 2, 3, 4], [3])
+const neuron = new Perceptron([1, 2, 3, 4], [1, 2, 3, 4], [3], 1)
 
 console.log(neuron.activate())
