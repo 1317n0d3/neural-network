@@ -5,12 +5,15 @@ class Perceptron {
   outputs: Array<number>
   neurons: Array<number>
   layersCount: number
+  neuronsCount: Array<number>
 
-  constructor(inputs: Array<number>, weights: Array<number>, outputs: Array<number>, layersCount: number) {
+  constructor(inputs: Array<number>, weights: Array<number>, outputs: Array<number>, 
+    layersCount: number, ...neuronsCount: Array<number>) {
     this.inputs = inputs
     this.weights = weights
     this.outputs = outputs
     this.layersCount = layersCount
+    this.neuronsCount = neuronsCount
   }
 
   getWeightSum(inputs: Array<number>): number {
