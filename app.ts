@@ -7,17 +7,21 @@ class Perceptron {
   layersCount: number
   neuronsCount: Array<number>
 
-  constructor(inputs: Array<number>, weights: Array<number>, outputs: Array<number>, 
+  constructor(inputs: Array<number>, outputs: Array<number>, 
     layersCount: number, ...neuronsCount: Array<number>) {
     this.inputs = inputs
-    this.weights = weights
     this.outputs = outputs
     this.layersCount = layersCount
     this.neuronsCount = neuronsCount
+    this.resetNetwork(this.weights)
   }
 
   getWeightSum(inputs: Array<number>): number {
     return this.weights.reduce((a, b, index) => a + b * inputs[index])
+  }
+
+  resetNetwork(weights: Array<number>): void {
+    this.inputs.forEach(() => weights.push(Math.random()))
   }
 
   activate(): number {
@@ -25,6 +29,6 @@ class Perceptron {
   }
 }
 
-const neuron = new Perceptron([1, 2, 3, 4], [1, 2, 3, 4], [3], 1)
+const neuron = new Perceptron([1, 2, 3, 4], [3], 1)
 
 console.log(neuron.activate())
