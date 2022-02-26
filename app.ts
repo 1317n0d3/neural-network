@@ -1,18 +1,12 @@
-class Perceptron {
+class Neuron {
   alpha: number = 1
   inputs: Array<number>
   weights: Array<number>
-  outputs: Array<number>
-  neurons: Array<number>
-  layersCount: number
-  neuronsCount: Array<number>
+  output: number
 
-  constructor(inputs: Array<number>, outputs: Array<number>, 
-    layersCount: number, ...neuronsCount: Array<number>) {
+  constructor(inputs: Array<number>, output: number) {
     this.inputs = inputs
-    this.outputs = outputs
-    this.layersCount = layersCount
-    this.neuronsCount = neuronsCount
+    this.output = output
     this.resetNetwork(this.weights)
   }
 
@@ -29,6 +23,11 @@ class Perceptron {
   }
 }
 
-const neuron = new Perceptron([1, 2, 3, 4], [3], 1)
+class Perceptron {
+  outputs: Array<number>
+  neurons: Array<number>
+  layersCount: number
+  neuronsCount: Array<number>
 
-console.log(neuron.activate())
+  constructor() {}
+}
