@@ -25,9 +25,14 @@ class Neuron {
 
 class Perceptron {
   outputs: Array<number>
-  neurons: Array<number>
+  inputs: Array<number>
+  neurons: Array<Neuron>
   layersCount: number
-  neuronsCount: Array<number>
+  neuronsCount: number
 
-  constructor() {}
+  constructor(layersCount: number, neuronsCount: number, inputs: Array<number>) {
+    this.layersCount = layersCount
+    this.neuronsCount = neuronsCount
+    this.inputs = inputs
+  }
 }
