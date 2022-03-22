@@ -26,8 +26,10 @@ class Neuron {
 class Perceptron {
   outputs: Array<number>
   inputs: Array<number>
-  neurons: Array<Neuron>
+  neurons: Array<Array<Neuron>> = new Array<Array<Neuron>>()
+  // количество слоев
   layersCount: number
+  // количество нейронов на каждом слое
   neuronsCount: number
 
   constructor(layersCount: number, neuronsCount: number, inputs: Array<number>) {
@@ -36,3 +38,5 @@ class Perceptron {
     this.inputs = inputs
   }
 }
+
+console.log('hello');

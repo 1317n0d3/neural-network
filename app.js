@@ -1,19 +1,28 @@
 var Neuron = /** @class */ (function () {
-    function Neuron(inputs, weights, outputs) {
+    function Neuron(inputs, output) {
         this.alpha = 1;
         this.inputs = inputs;
-        this.weights = weights;
-        this.outputs = outputs;
+        this.output = output;
+        this.resetNetwork(this.weights);
     }
-    Neuron.prototype.getWeightSum = function () {
-        var _this = this;
-        return this.weights.reduce(function (a, b, index) { return a + b * _this.inputs[index]; });
+    Neuron.prototype.getWeightSum = function (inputs) {
+        return this.weights.reduce(function (a, b, index) { return a + b * inputs[index]; });
+    };
+    Neuron.prototype.resetNetwork = function (weights) {
+        this.inputs.forEach(function () { return weights.push(Math.random()); });
     };
     Neuron.prototype.activate = function () {
-        return 1 / (1 + Math.exp(-this.alpha * this.getWeightSum()));
+        return 1 / (1 + Math.exp(-this.alpha * this.getWeightSum(this.inputs)));
     };
     return Neuron;
 }());
-var neuron = new Neuron([1, 2, 3, 4], [1, 2, 3, 4], [3]);
-console.log(neuron.getWeightSum());
-console.log(neuron.activate());
+var Perceptron = /** @class */ (function () {
+    function Perceptron(layersCount, neuronsCount, inputs) {
+        this.neurons = new Array();
+        this.layersCount = layersCount;
+        this.neuronsCount = neuronsCount;
+        this.inputs = inputs;
+    }
+    return Perceptron;
+}());
+console.log('hello');
