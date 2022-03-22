@@ -4,10 +4,10 @@ class Neuron {
   weights: Array<number>
   output: number
 
-  constructor(inputs: Array<number>, output: number) {
+  constructor(inputs: Array<number>) {
     this.inputs = inputs
-    this.output = output
     this.resetNetwork(this.weights)
+    this.output = this.activate()
   }
 
   getWeightSum(inputs: Array<number>): number {
@@ -21,18 +21,22 @@ class Neuron {
   activate(): number {
     return 1 / (1 + Math.exp(-this.alpha * this.getWeightSum(this.inputs)))
   }
+
+  getOutput(): number {
+    return this.output
+  }
 }
 
 class Perceptron {
   outputs: Array<number>
   inputs: Array<number>
-  neurons: Array<Array<Neuron>> = new Array<Array<Neuron>>()
+  neuronNet: Array<Array<Neuron>> = new Array<Array<Neuron>>()
   // количество слоев
   layersCount: number
   // количество нейронов на каждом слое
   neuronsCount: number
 
-  constructor(layersCount: number, neuronsCount: number, inputs: Array<number>) {
+  constructor(layersCount: number = 3, neuronsCount: number = 3, inputs: Array<number>) {
     this.layersCount = layersCount
     this.neuronsCount = neuronsCount
     this.inputs = inputs
