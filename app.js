@@ -1,9 +1,9 @@
 var Neuron = /** @class */ (function () {
-    function Neuron(inputs, output) {
+    function Neuron(inputs) {
         this.alpha = 1;
         this.inputs = inputs;
-        this.output = output;
         this.resetNetwork(this.weights);
+        this.output = this.activate();
     }
     Neuron.prototype.getWeightSum = function (inputs) {
         return this.weights.reduce(function (a, b, index) { return a + b * inputs[index]; });
@@ -14,11 +14,16 @@ var Neuron = /** @class */ (function () {
     Neuron.prototype.activate = function () {
         return 1 / (1 + Math.exp(-this.alpha * this.getWeightSum(this.inputs)));
     };
+    Neuron.prototype.getOutput = function () {
+        return this.output;
+    };
     return Neuron;
 }());
 var Perceptron = /** @class */ (function () {
     function Perceptron(layersCount, neuronsCount, inputs) {
-        this.neurons = new Array();
+        if (layersCount === void 0) { layersCount = 3; }
+        if (neuronsCount === void 0) { neuronsCount = 3; }
+        this.neuronNet = new Array();
         this.layersCount = layersCount;
         this.neuronsCount = neuronsCount;
         this.inputs = inputs;

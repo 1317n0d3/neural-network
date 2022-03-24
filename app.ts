@@ -40,6 +40,12 @@ class Perceptron {
     this.layersCount = layersCount
     this.neuronsCount = neuronsCount
     this.inputs = inputs
+    
+    for(let i = 0; i < layersCount; i++) {
+      for(let j = 0; j < neuronsCount; j++) {
+        this.neuronNet[i][j] = new Neuron(inputs);
+      }
+    }
   }
 }
 
