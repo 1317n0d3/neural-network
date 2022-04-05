@@ -7,7 +7,7 @@
     "start": "tsc app.ts && node app.js"
   },
   "devDependencies": {
-    
+    "typescript": "^4.6.3"
   },
   "keywords": [],
   "author": "",

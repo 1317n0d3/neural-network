@@ -27,6 +27,11 @@ var Perceptron = /** @class */ (function () {
         this.layersCount = layersCount;
         this.neuronsCount = neuronsCount;
         this.inputs = inputs;
+        for (var i = 0; i < layersCount; i++) {
+            for (var j = 0; j < neuronsCount; j++) {
+                this.neuronNet[i][j] = new Neuron(inputs);
+            }
+        }
     }
     return Perceptron;
 }());
