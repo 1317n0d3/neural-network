@@ -1,12 +1,3 @@
-const mmap = math.map;
-const rand = math.random;
-const transp = math.transpose;
-const mat = math.matrix;
-const e = math.evaluate;
-const sub = math.subtract;
-const sqr = math.square;
-const sum = math.sum;
-
 class NeuralNetwork {
   constructor(inputnodes, hiddennodes, outputnodes, learningrate, wih, who) {
     this.inputnodes = inputnodes;
@@ -14,10 +5,14 @@ class NeuralNetwork {
     this.outputnodes = outputnodes;
     this.learningrate = learningrate;
 
-    this.wih = wih || sub(mat(rand([hiddennodes, inputnodes])), 0.5);
-    this.who = who || sub(mat(rand([outputnodes, hiddennodes])), 0.5);
+    this.wih =
+      wih ||
+      math.subtract(math.matrix(math.random([hiddennodes, inputnodes])), 0.5);
+    this.who =
+      who ||
+      math.subtract(math.matrix(math.random([outputnodes, hiddennodes])), 0.5);
 
-    this.act = (matrix) => mmap(matrix, (x) => 1 / (1 + Math.exp(-x)));
+    this.act = (matrix) => math.map(matrix, (x) => 1 / (1 + Math.exp(-x)));
   }
 
   static normalizeData = (data) => {
@@ -31,12 +26,12 @@ class NeuralNetwork {
     const who = this.who;
     const act = this.act;
 
-    input = transp(mat([input]));
+    input = math.transpose(math.matrix([input]));
 
-    const h_in = e("wih * input", { wih, input });
+    const h_in = math.evaluate("wih * input", { wih, input });
     const h_out = act(h_in);
 
-    const o_in = e("who * h_out", { who, h_out });
+    const o_in = math.evaluate("who * h_out", { who, h_out });
     const actual = act(o_in);
 
     this.cache.input = input;
@@ -52,31 +47,31 @@ class NeuralNetwork {
     const h_out = this.cache.h_out;
     const actual = this.cache.actual;
 
-    target = transp(mat([target]));
+    target = math.transpose(math.matrix([target]));
 
-    const dEdA = sub(target, actual);
+    const dEdA = math.subtract(target, actual);
 
-    const o_dAdZ = e("actual .* (1 - actual)", {
+    const o_dAdZ = math.evaluate("actual .* (1 - actual)", {
       actual,
     });
 
-    const dwho = e("(dEdA .* o_dAdZ) * h_out'", {
+    const dwho = math.evaluate("(dEdA .* o_dAdZ) * h_out'", {
       dEdA,
       o_dAdZ,
       h_out,
     });
 
-    const h_err = e("who' * (dEdA .* o_dAdZ)", {
+    const h_err = math.evaluate("who' * (dEdA .* o_dAdZ)", {
       who,
       dEdA,
       o_dAdZ,
     });
 
-    const h_dAdZ = e("h_out .* (1 - h_out)", {
+    const h_dAdZ = math.evaluate("h_out .* (1 - h_out)", {
       h_out,
     });
 
-    const dwih = e("(h_err .* h_dAdZ) * input'", {
+    const dwih = math.evaluate("(h_err .* h_dAdZ) * input'", {
       h_err,
       h_dAdZ,
       input,
@@ -84,7 +79,7 @@ class NeuralNetwork {
 
     this.cache.dwih = dwih;
     this.cache.dwho = dwho;
-    this.cache.loss.push(sum(sqr(dEdA)));
+    this.cache.loss.push(math.sum(math.square(dEdA)));
   };
 
   update = () => {
@@ -94,8 +89,8 @@ class NeuralNetwork {
     const dwho = this.cache.dwho;
     const r = this.learningrate;
 
-    this.wih = e("wih + (r .* dwih)", { wih, r, dwih });
-    this.who = e("who + (r .* dwho)", { who, r, dwho });
+    this.wih = math.evaluate("wih + (r .* dwih)", { wih, r, dwih });
+    this.who = math.evaluate("who + (r .* dwho)", { who, r, dwho });
   };
 
   predict = (input) => {
@@ -236,7 +231,7 @@ function train() {
 
         if (index === trainingData.length - 1) {
           status.innerHTML += `Loss:  ${
-            sum(myNN.cache.loss) / trainingData.length
+            math.sum(myNN.cache.loss) / trainingData.length
           }<br><br>`;
           myNN.cache.loss = [];
 
